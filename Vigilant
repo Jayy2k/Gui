@@ -6,6 +6,8 @@ local changeLog = {
     ["0.0.1"] = "Initial release with basic UI and a clickable button."
 }
 
+print("Script has started successfully!")
+
 local function showVersionInfo()
     print("Current Version: " .. version)
     print("Change Log:")
@@ -24,7 +26,9 @@ local function checkForUpdates()
     end
 end
 
-local screenGui = Instance.new("ScreenGui", game.Players.LocalPlayer:WaitForChild("PlayerGui"))
+local player = game.Players.LocalPlayer
+
+local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
 local frame = Instance.new("Frame", screenGui)
 frame.Size = UDim2.new(0.5, 0, 0.5, 0)
 frame.Position = UDim2.new(0.25, 0, 0.25, 0)
@@ -41,7 +45,7 @@ local buttonCorner = Instance.new("UICorner", button)
 local function onButtonClick()
     local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out)
     local goal = { Size = UDim2.new(0.55, 0, 0.25, 0) }
-    
+
     local tween = TweenService:Create(button, tweenInfo, goal)
     tween:Play()
 
