@@ -1,0 +1,58 @@
+lua
+local TweenService = game:GetService("TweenService")
+
+local version = "0.0.1"
+local changeLog = {
+    ["0.0.1"] = "Initial release with basic UI and a clickable button."
+}
+
+local function showVersionInfo()
+    print("Current Version: " .. version)
+    print("Change Log:")
+    for ver, log in pairs(changeLog) do
+        print(ver .. ": " .. log)
+    end
+end
+
+local function checkForUpdates()
+    local latestVersion = "0.0.1"
+    if version < latestVersion then
+        print("A new version is available: " .. latestVersion)
+        print("Please update to enjoy the latest features!")
+    else
+        print("You are using the latest version!")
+    end
+end
+
+local screenGui = Instance.new("ScreenGui", game.Players.LocalPlayer:WaitForChild("PlayerGui"))
+local frame = Instance.new("Frame", screenGui)
+frame.Size = UDim2.new(0.5, 0, 0.5, 0)
+frame.Position = UDim2.new(0.25, 0, 0.25, 0)
+frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+local corner = Instance.new("UICorner", frame)
+
+local button = Instance.new("TextButton", frame)
+button.Size = UDim2.new(0.5, 0, 0.2, 0)
+button.Position = UDim2.new(0.25, 0, 0.2, 0)
+button.Text = "Click Me!"
+button.BackgroundColor3 = Color3.fromRGB(0, 170, 0)
+local buttonCorner = Instance.new("UICorner", button)
+
+local function onButtonClick()
+    local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out)
+    local goal = { Size = UDim2.new(0.55, 0, 0.25, 0) }
+    
+    local tween = TweenService:Create(button, tweenInfo, goal)
+    tween:Play()
+
+    tween.Completed:Wait()
+
+    goal = { Size = UDim2.new(0.5, 0, 0.2, 0) }
+    tween = TweenService:Create(button, tweenInfo, goal)
+    tween:Play()
+end
+
+button.MouseButton1Click:Connect(onButtonClick)
+
+showVersionInfo()
+checkForUpdates()
